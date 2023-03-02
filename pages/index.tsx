@@ -1,13 +1,13 @@
 import React from 'react'
 import Head from 'next/head'
-import NavBar from '../components/navBar/navBar'
+import NavBar from '../components/navBar'
 
 export default function Home() {
 
   return (
     <>
       <Head>
-        <title>Create Next App</title>
+        <title>Home</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <NavBar />

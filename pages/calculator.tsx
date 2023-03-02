@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import NavBar from "../../components/navBar/navBar";
+import NavBar from "../components/navBar";
 import Head from "next/head";
 
-const calculator = () => {
+const Calculator = () => {
 
-  const [value, setValue] = useState<string>("12 + 61212");
+  const [value, setValue] = useState<string>("");
   const [sum, setSum] = useState<number | undefined>();
 
   const keySet: Array<Array<string>> = [
@@ -17,17 +17,22 @@ const calculator = () => {
 
   const click = (prop: string) => {
 
+    const isCorrect = (): boolean => value.charAt(value.length - 2) != sumChars;
+  
+    const sumChars = "+" || "-" || "/" || "*";
+    const areSumeChar = (prop: string): string => sumChars != prop ? prop : ` ${prop} `;
+  
     const buttonFuncs: any = {
       "C": () => {setValue(""); setSum(undefined);},
       "=": () => {setSum(eval(value));},
-      "<": () => {setValue(val => val.charAt(val.length - 1) == " " ? val.slice(0, val.length - 2) : val.slice(0, val.length - 1))},
+      "<": () => {setValue((val: string) => val.charAt(val.length - 1) == " " ? val.slice(0, val.length - 2) : val.slice(0, val.length - 1))},
       "√": () => {setSum(Math.sqrt(eval(value)))},
-      "x²": () => {setSum(Math.pow(eval(value), 2))}
+      "x²": () => {setSum(Math.pow(eval(value), 2))},
     };
-
-    const func = buttonFuncs[prop] || prop;
+  
+    const func = buttonFuncs[prop] || (isCorrect() ? areSumeChar(prop) : "");
     if(typeof func == "function") return func();
-    setValue(val => val + func);
+    setValue((val: string) => val + func);
   }
 
   return (
@@ -48,13 +53,15 @@ const calculator = () => {
             </div>
             <div
               className="text-end h-10 mx-2">
-              { sum && sum + "="}
+              { sum && sum + "=" }
             </div>
           </div>
 
           <div className="mb-8">
             {keySet.map((ul: string[] ) =>
-              <ul className="w-124 h-24 flex justify-around items-center mx-auto">
+              <ul key={ul[0] + ul[1]}
+                className="w-124 h-24 flex justify-around items-center mx-auto"
+              >
                 {ul.map((li: string) =>
                   <li key={li}
                     className="bg-white/20 w-20 h-20 flex justify-center items-center rounded-full
@@ -74,4 +81,5 @@ const calculator = () => {
   )
 }
 
-export default calculator;
+
+export default Calculator;

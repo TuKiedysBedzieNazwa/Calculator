@@ -8,6 +8,7 @@ const NavBar = () => {
     <div className="flex justify-around items-center h-24 w-full absolute bg-white/10 select-none">
       <Button name="Home" />
       <Button name="Calculator" />
+      <Button name="Tetris" />
       <Button name="About"/>
     </div>
   )
